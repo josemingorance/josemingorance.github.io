@@ -139,6 +139,7 @@ h3 span { font-weight: 400; color: var(--mute); margin-left: .35em; }
 @media (min-width: 900px) and (min-height: 600px) {
   html.js { height: 100%; font-size: clamp(13px, 2vh, 16px); }
   html.js body {
+    height: 100vh;
     height: 100dvh;
     overflow: hidden;
     display: grid;
@@ -155,9 +156,9 @@ h3 span { font-weight: 400; color: var(--mute); margin-left: .35em; }
     margin: 0;
     border-radius: 0;
     pointer-events: none;
-    -webkit-mask-image: linear-gradient(to right, transparent 2%, #000 34%), linear-gradient(to bottom, transparent 0, #000 24%);
+    -webkit-mask-image: linear-gradient(to right, transparent 2%, #000 34%), linear-gradient(to bottom, transparent 0, #000 13%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right, transparent 2%, #000 34%), linear-gradient(to bottom, transparent 0, #000 24%);
+    mask-image: linear-gradient(to right, transparent 2%, #000 34%), linear-gradient(to bottom, transparent 0, #000 13%);
     mask-composite: intersect;
     transition: opacity 1.8s ease-out, transform 2.4s var(--ease);
   }
