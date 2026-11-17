@@ -208,6 +208,26 @@
     else if (/^[1-9]$/.test(e.key)) show(parseInt(e.key, 10) - 1);
   });
 
+  // scroll wheel / trackpad: one section per gesture
+  var acc = 0, locked = false, quiet = null, since = 0;
+  window.addEventListener('wheel', function (e) {
+    if (!oneScreen.matches || e.ctrlKey) return;
+    e.preventDefault();
+    clearTimeout(quiet);
+    quiet = setTimeout(function () { locked = false; acc = 0; }, 160);
+    if (typing) { finish(); locked = true; since = Date.now(); return; }
+    if (locked) {
+      // a fresh, deliberate push after the pause still counts; inertia does not
+      if (Date.now() - since < 900 || Math.abs(e.deltaY) < 40) return;
+      locked = false; acc = 0;
+    }
+    acc += Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if (Math.abs(acc) < 30) return;
+    var next = current + (acc > 0 ? 1 : -1);
+    acc = 0; locked = true; since = Date.now();
+    if (next >= 0 && next < panels.length) show(next);
+  }, { passive: false });
+
   function sync() { show(current, true); }
   if (oneScreen.addEventListener) oneScreen.addEventListener('change', sync);
   else if (oneScreen.addListener) oneScreen.addListener(sync);
